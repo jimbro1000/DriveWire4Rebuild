@@ -39,6 +39,11 @@ public final class SerialPortDef extends BasePortDef {
   @Setter
   private int portId;
   /**
+   * Required port name.
+   */
+  @Setter
+  private String portName;
+  /**
    * RS232 stop bits 0/1.
    */
   @Setter

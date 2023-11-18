@@ -16,7 +16,7 @@
   <description>drivewire</description>
   <properties>
     <java.version>17</java.version>
-    <rxtx.version>2.1.7</rxtx.version>
+    <jserialcomm.version>2.10.4</jserialcomm.version>
   </properties>
   <dependencies>
     <dependency>
@@ -30,9 +30,9 @@
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>org.rxtx</groupId>
-      <artifactId>rxtx</artifactId>
-      <version>${rxtx.version}</version>
+      <groupId>com.fazecast</groupId>
+      <artifactId>jSerialComm</artifactId>
+      <version>${jserialcomm.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

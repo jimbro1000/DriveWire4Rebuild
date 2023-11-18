@@ -46,7 +46,7 @@ public class DWNullPortTest {
   @DisplayName("It should accept a serial port definition")
   public void dontThrowExceptionOnSerialDefintion() {
     DWIPort port = new DWNullPort(null);
-    assertDoesNotThrow(() -> port.setPortDef(new SerialPortDef(0, 0, 0, 0, 0)));
+    assertDoesNotThrow(() -> port.setPortDef(new SerialPortDef(0, 0, 0, 0, "com1", 0)));
   }
 
   @Test

@@ -2,6 +2,7 @@ package org.thelair.dw4.drivewire;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.thelair.dw4.drivewire.ports.*;
 
 /**
  * Spring application bootstrap.
@@ -25,6 +26,6 @@ public class DrivewireApplication {
    * start core.
    */
   public DrivewireApplication() {
-    core = new DWCore();
+    core = new DWCore(new DWPortManager());
   }
 }
