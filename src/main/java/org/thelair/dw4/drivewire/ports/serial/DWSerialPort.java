@@ -2,18 +2,39 @@ package org.thelair.dw4.drivewire.ports.serial;
 
 import org.thelair.dw4.drivewire.ports.BasePortDef;
 import org.thelair.dw4.drivewire.ports.DWIPort;
+import org.thelair.dw4.drivewire.ports.DWIPortManager;
 import org.thelair.dw4.drivewire.ports.InvalidPortTypeDefinition;
 
-public class DWSerialPort implements DWIPort {
+/**
+ * RS232 Serial port definition.
+ */
+public final class DWSerialPort implements DWIPort {
+  /**
+   * Serial port definition.
+   */
   private SerialPortDef portDef;
+  /**
+   * Port manager.
+   */
+  private final DWIPortManager portManager;
+
+  /**
+   * Create serial port with reference to manager.
+   * @param manager port manager handling this port
+   */
+  public DWSerialPort(final DWIPortManager manager) {
+    this.portManager = manager;
+  }
   @Override
-  public void openWith(BasePortDef port) throws InvalidPortTypeDefinition {
+  public void openWith(final BasePortDef port)
+      throws InvalidPortTypeDefinition {
     this.portDef = validatePortDef(port);
-    //register
+    portManager.registerOpenPort(this);
   }
 
   @Override
-  public void setPortDef(BasePortDef port) throws InvalidPortTypeDefinition {
+  public void setPortDef(final BasePortDef port)
+      throws InvalidPortTypeDefinition {
     this.portDef = validatePortDef(port);
   }
 
@@ -24,10 +45,10 @@ public class DWSerialPort implements DWIPort {
 
   @Override
   public void closePort() {
-    //deregister
+    portManager.registerClosedPort(this);
   }
 
-  private SerialPortDef validatePortDef(BasePortDef port)
+  private SerialPortDef validatePortDef(final BasePortDef port)
       throws InvalidPortTypeDefinition {
     if (port.getClass() == SerialPortDef.class) {
       return (SerialPortDef) port;

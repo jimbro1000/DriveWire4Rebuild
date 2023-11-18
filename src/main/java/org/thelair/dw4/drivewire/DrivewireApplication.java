@@ -3,11 +3,28 @@ package org.thelair.dw4.drivewire;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * Spring application bootstrap.
+ */
 @SpringBootApplication
 public class DrivewireApplication {
+  /**
+   * Core service.
+   */
+  private final DWCore core;
 
-  public static void main(String[] args) {
+  /**
+   * Instantiate core Spring application.
+   * @param args configuration arguments
+   */
+  public static void main(final String[] args) {
     SpringApplication.run(DrivewireApplication.class, args);
   }
 
+  /**
+   * start core.
+   */
+  public DrivewireApplication() {
+    core = new DWCore();
+  }
 }

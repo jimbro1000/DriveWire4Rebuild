@@ -5,16 +5,19 @@ import org.thelair.dw4.drivewire.ports.BasePortDef;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TcpPortDef extends BasePortDef {
+/**
+ * TCP port definition record.
+ */
+public final class TcpPortDef extends BasePortDef {
   @Override
   public DWPortTypeIdentity identify() {
-    return DWPortTypeIdentity.tcpPort;
+    return DWPortTypeIdentity.TCP_PORT;
   }
 
   @Override
   public Map<String, Integer> getPortDetail() {
-    Map<String, Integer> result = new HashMap<>();
-    result.put("Identity", DWPortTypeIdentity.tcpPort.type);
+    final Map<String, Integer> result = new HashMap<>();
+    result.put("Identity", DWPortTypeIdentity.TCP_PORT.getPortType());
     return result;
   }
 }
