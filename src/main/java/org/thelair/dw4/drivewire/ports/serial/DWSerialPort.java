@@ -1,6 +1,6 @@
 package org.thelair.dw4.drivewire.ports.serial;
 
-import com.fazecast.jSerialComm.*;
+import com.fazecast.jSerialComm.SerialPort;
 import org.thelair.dw4.drivewire.ports.BasePortDef;
 import org.thelair.dw4.drivewire.ports.DWIPort;
 import org.thelair.dw4.drivewire.ports.DWIPortManager;
@@ -18,18 +18,30 @@ public final class DWSerialPort implements DWIPort {
    * Port manager.
    */
   private final DWIPortManager portManager;
-
+  /**
+   * concrete com port object.
+   */
   private SerialPort comPort;
-
+  /**
+   * Serial port handler.
+   */
   private final SerialPortHardware portHandler;
-
+  /**
+   * Unique port identifier.
+   */
   private int portId;
 
   /**
    * Create serial port with reference to manager.
    * @param manager port manager handling this port
+   * @param port identifier
+   * @param hardPorts host serial hardware
    */
-  public DWSerialPort(final DWIPortManager manager, final int port, final SerialPortHardware hardPorts) {
+  public DWSerialPort(
+      final DWIPortManager manager,
+      final int port,
+      final SerialPortHardware hardPorts
+  ) {
     this.portManager = manager;
     this.portId = port;
     this.portHandler = hardPorts;
@@ -69,10 +81,13 @@ public final class DWSerialPort implements DWIPort {
     return serialDef;
   }
 
-  private SerialPort matchPort(final String portName) throws InvalidPortTypeDefinition {
+  private SerialPort matchPort(final String portName)
+      throws InvalidPortTypeDefinition {
     SerialPort matchedPort = portHandler.getPortByName(portName);
     if (matchedPort == null) {
-      throw new InvalidPortTypeDefinition("named port is not available", this.portDef);
+      throw new InvalidPortTypeDefinition(
+          "named port is not available", this.portDef
+      );
     }
     return matchedPort;
   }

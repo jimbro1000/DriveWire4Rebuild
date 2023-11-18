@@ -1,6 +1,7 @@
 package org.thelair.dw4.drivewire.ports;
 
-import org.thelair.dw4.drivewire.ports.serial.*;
+import org.thelair.dw4.drivewire.ports.serial.DWSerialPort;
+import org.thelair.dw4.drivewire.ports.serial.SerialPortHardware;
 import org.thelair.dw4.drivewire.ports.tcp.DWTcpPort;
 
 import java.util.HashMap;
@@ -79,7 +80,9 @@ public class DWPortManager implements DWIPortManager {
   ) {
     final DWIPort result = switch (portType) {
       case TCP_PORT -> new DWTcpPort();
-      case SERIAL_PORT -> new DWSerialPort(this, nextPort, new SerialPortHardware());
+      case SERIAL_PORT -> new DWSerialPort(
+          this, nextPort, new SerialPortHardware()
+      );
       default -> new DWNullPort(this);
     };
     portMap.put(nextPort, result);
