@@ -15,6 +15,7 @@
   <name>drivewire</name>
   <description>drivewire</description>
   <properties>
+    <sourceEncoding>utf-8</sourceEncoding>
     <java.version>17</java.version>
     <jserialcomm.version>2.10.4</jserialcomm.version>
   </properties>
@@ -113,6 +114,36 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.11</version>
+        <configuration>
+          <dataFile>
+            ${basedir}/target/coverage-reports/jacoco-unit.exec
+          </dataFile>
+          <excludes>
+            <exclude>org/thelair/dw4/drivewire/**/JWSerial.*</exclude>
+            <exclude>org/thelair/dw4/drivewire/**/NullSerial.*</exclude>
+            <exclude>org/thelair/dw4/drivewire/**/OsUtils.*</exclude>
+            <exclude>org/thelair/dw4/drivewire/**/AppUtils.*</exclude>
+          </excludes>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
   <reporting>
@@ -122,7 +153,6 @@
         <artifactId>maven-pmd-plugin</artifactId>
         <version>3.21.2</version>
         <configuration>
-          <sourceEncoding>utf-8</sourceEncoding>
           <rulesets>
             <ruleset>${pom.basedir}/pmd-exclude.xml</ruleset>
           </rulesets>

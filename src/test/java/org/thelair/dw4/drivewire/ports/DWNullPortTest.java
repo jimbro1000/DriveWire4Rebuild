@@ -22,14 +22,14 @@ public class DWNullPortTest {
   @Test
   @DisplayName("It should always identify as a null port")
   public void identifyAsANullPort() {
-    DWIPort port = new DWNullPort(null);
-    assertEquals(0, port.identifyPort(), "should return null port value (0)");
+    DWIPort port = new DWNullPort(null, 1);
+    assertEquals(1, port.identifyPort(), "should return given port value");
   }
 
   @Test
   @DisplayName("It should register with its manager on open")
   public void registerWithManagerOnOpen() throws InvalidPortTypeDefinition {
-    DWIPort port = new DWNullPort(portManager);
+    DWIPort port = new DWNullPort(portManager, 1);
     port.openWith(null);
     verify(portManager, times(1)).registerOpenPort(port);
   }
@@ -37,7 +37,7 @@ public class DWNullPortTest {
   @Test
   @DisplayName("It should re-register with its manager on close")
   public void deregisterWithManagerOnClose() {
-    DWIPort port = new DWNullPort(portManager);
+    DWIPort port = new DWNullPort(portManager, 1);
     port.closePort();
     verify(portManager, times(1)).registerClosedPort(port);
   }
@@ -45,14 +45,14 @@ public class DWNullPortTest {
   @Test
   @DisplayName("It should accept a serial port definition")
   public void dontThrowExceptionOnSerialDefintion() {
-    DWIPort port = new DWNullPort(null);
+    DWIPort port = new DWNullPort(null, 1);
     assertDoesNotThrow(() -> port.setPortDef(new SerialPortDef(0, 0, 0, 0, "com1", 0)));
   }
 
   @Test
   @DisplayName("It should accept a serial port definition")
   public void dontThrowExceptionOnTcpDefintion() {
-    DWIPort port = new DWNullPort(null);
+    DWIPort port = new DWNullPort(null, 1);
     assertDoesNotThrow(() -> port.setPortDef(new TcpPortDef()));
   }
 }

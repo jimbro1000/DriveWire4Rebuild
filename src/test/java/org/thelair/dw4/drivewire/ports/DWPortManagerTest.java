@@ -47,4 +47,48 @@ public class DWPortManagerTest {
         "as closed");
     assertEquals(1, portManager.getPortCount(), "Ports should be recorded");
   }
+
+  @Test
+  public void itAddsOpenedPortToPool() throws InvalidPortTypeDefinition {
+    DWIPort port =
+        portManager.createPortInstance(DWIPortType.DWPortTypeIdentity.NULL_PORT);
+    int openPorts = portManager.getOpenPortCount();
+    port.openWith(null);
+    assertEquals(openPorts + 1, portManager.getOpenPortCount(), "opened ports" +
+        " should be added to open port set");
+  }
+
+  @Test
+  public void itRemovesOpenPortFromPoolWhenClosed()
+      throws InvalidPortTypeDefinition {
+    DWIPort port =
+        portManager.createPortInstance(DWIPortType.DWPortTypeIdentity.NULL_PORT);
+    port.openWith(null);
+    int openPorts = portManager.getOpenPortCount();
+    port.closePort();
+    assertEquals(openPorts - 1, portManager.getOpenPortCount(), "closed ports" +
+        " should be removed from open port set");
+  }
+
+  @Test
+  public void itRemovesDestroyedPortsFromClosedStore() {
+    DWIPort port =
+        portManager.createPortInstance(DWIPortType.DWPortTypeIdentity.NULL_PORT);
+    int ports = portManager.getClosedPortCount();
+    portManager.disposePort(port);
+    assertEquals(ports - 1, portManager.getClosedPortCount(), "it should " +
+        "remove a disposed port from the closed pool");
+  }
+
+  @Test
+  public void itRemovesDestroyedPortsFromOpenStore()
+      throws InvalidPortTypeDefinition {
+    DWIPort port =
+        portManager.createPortInstance(DWIPortType.DWPortTypeIdentity.NULL_PORT);
+    port.openWith(null);
+    int ports = portManager.getOpenPortCount();
+    portManager.disposePort(port);
+    assertEquals(ports - 1, portManager.getOpenPortCount(), "it should " +
+        "remove a disposed port from the closed pool");
+  }
 }

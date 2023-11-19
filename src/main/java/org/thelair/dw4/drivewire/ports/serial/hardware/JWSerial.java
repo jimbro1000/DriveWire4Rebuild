@@ -223,10 +223,10 @@ public class JWSerial implements DWISerial {
    * system (only meaningful after the port is already opened)
    */
   @Override
-  public boolean setCommPortParameters(final int newBaudRate,
-                                       final int newDataBits,
-                                       final int newStopBits,
-                                       final int newParity) {
+  public boolean trySetCommPortParameters(final int newBaudRate,
+                                          final int newDataBits,
+                                          final int newStopBits,
+                                          final int newParity) {
     return hostSerial.setComPortParameters(newBaudRate, newDataBits,
         newStopBits, newParity);
   }

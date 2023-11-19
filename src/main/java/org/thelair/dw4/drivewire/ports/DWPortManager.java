@@ -83,7 +83,7 @@ public class DWPortManager implements DWIPortManager {
       case SERIAL_PORT -> new DWSerialPort(
           this, nextPort, new SerialPortHardware()
       );
-      default -> new DWNullPort(this);
+      default -> new DWNullPort(this, nextPort);
     };
     portMap.put(nextPort, result);
     findNextPort();
@@ -96,7 +96,14 @@ public class DWPortManager implements DWIPortManager {
    */
   @Override
   public void disposePort(final DWIPort port) {
-    // destroy port
+    final int portId = port.identifyPort();
+    if (openPorts.contains(port)) {
+      port.closePort();
+    }
+    portMap.remove(port.identifyPort());
+    if (portId < nextPort) {
+      nextPort = portId;
+    }
   }
 
   private void findNextPort() {

@@ -76,14 +76,14 @@ public final class DWSerialPort implements DWIPort {
       throw new InvalidPortTypeDefinition("Invalid serial port definition",
           port);
     }
-    SerialPortDef serialDef = (SerialPortDef) port;
+    final SerialPortDef serialDef = (SerialPortDef) port;
     comPort = matchPort(serialDef.getPortName());
     return serialDef;
   }
 
   private DWISerial matchPort(final String portName)
       throws InvalidPortTypeDefinition {
-    DWISerial matchedPort = portHandler.getPortByName(portName);
+    final DWISerial matchedPort = portHandler.getPortByName(portName);
     if (matchedPort == null) {
       throw new InvalidPortTypeDefinition(
           "named port is not available", this.portDef

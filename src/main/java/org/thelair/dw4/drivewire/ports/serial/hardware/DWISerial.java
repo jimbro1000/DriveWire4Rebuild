@@ -155,7 +155,7 @@ public interface DWISerial {
    * @return Whether the port configuration is valid or disallowed on this
    * system (only meaningful after the port is already opened)
    */
-  boolean setCommPortParameters(
+  boolean trySetCommPortParameters(
       int newBaudRate, int newDataBits, int newStopBits, int newParity
   );
 

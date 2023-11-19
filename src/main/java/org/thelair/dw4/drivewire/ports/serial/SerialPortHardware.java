@@ -14,10 +14,10 @@ public class SerialPortHardware {
    * @return SerialPort
    */
   public DWISerial getPortByName(final String portName) {
-    SerialPort[] ports = SerialPort.getCommPorts();
+    final SerialPort[] ports = SerialPort.getCommPorts();
     SerialPort matchedPort = null;
-    for (SerialPort port : ports) {
-      if (port.getSystemPortName().equals(portName)) {
+    for (final SerialPort port : ports) {
+      if (port.getSystemPortName().contains(portName)) {
         matchedPort = port;
       }
     }
