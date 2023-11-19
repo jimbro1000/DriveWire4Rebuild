@@ -28,4 +28,11 @@ public interface DWIPort {
    * Close port and deregister with port handler.
    */
   void closePort();
+
+  /**
+   * Serialise port definition as String.
+   *
+   * @return port definition values
+   */
+  String getPortDefinition();
 }

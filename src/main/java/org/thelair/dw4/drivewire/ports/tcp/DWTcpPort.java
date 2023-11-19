@@ -36,6 +36,16 @@ public final class DWTcpPort implements DWIPort {
 
   }
 
+  /**
+   * Serialise port definition as String.
+   *
+   * @return port definition values
+   */
+  @Override
+  public String getPortDefinition() {
+    return "";
+  }
+
   private TcpPortDef validatePortDef(final BasePortDef port)
       throws InvalidPortTypeDefinition {
     if (port.getClass() == TcpPortDef.class) {
