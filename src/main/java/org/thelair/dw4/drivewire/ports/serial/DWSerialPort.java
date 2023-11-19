@@ -53,6 +53,7 @@ public final class DWSerialPort implements DWIPort {
     this.portManager = manager;
     this.portId = port;
     this.portHandler = hardPorts;
+    LOGGER.info("Serial port created " + port);
   }
   @Override
   public void openWith(final BasePortDef port)
