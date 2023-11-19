@@ -1,10 +1,10 @@
 package org.thelair.dw4.drivewire.ports.serial;
 
-import com.fazecast.jSerialComm.SerialPort;
 import org.thelair.dw4.drivewire.ports.BasePortDef;
 import org.thelair.dw4.drivewire.ports.DWIPort;
 import org.thelair.dw4.drivewire.ports.DWIPortManager;
 import org.thelair.dw4.drivewire.ports.InvalidPortTypeDefinition;
+import org.thelair.dw4.drivewire.ports.serial.hardware.DWISerial;
 
 /**
  * RS232 Serial port definition.
@@ -21,7 +21,7 @@ public final class DWSerialPort implements DWIPort {
   /**
    * concrete com port object.
    */
-  private SerialPort comPort;
+  private DWISerial comPort;
   /**
    * Serial port handler.
    */
@@ -81,9 +81,9 @@ public final class DWSerialPort implements DWIPort {
     return serialDef;
   }
 
-  private SerialPort matchPort(final String portName)
+  private DWISerial matchPort(final String portName)
       throws InvalidPortTypeDefinition {
-    SerialPort matchedPort = portHandler.getPortByName(portName);
+    DWISerial matchedPort = portHandler.getPortByName(portName);
     if (matchedPort == null) {
       throw new InvalidPortTypeDefinition(
           "named port is not available", this.portDef

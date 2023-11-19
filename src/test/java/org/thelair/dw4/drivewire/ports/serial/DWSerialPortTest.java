@@ -6,6 +6,8 @@ import org.junit.jupiter.api.extension.*;
 import org.mockito.*;
 import org.mockito.junit.jupiter.*;
 import org.thelair.dw4.drivewire.ports.*;
+import org.thelair.dw4.drivewire.ports.serial.hardware.DWISerial;
+import org.thelair.dw4.drivewire.ports.serial.hardware.NullSerial;
 import org.thelair.dw4.drivewire.ports.tcp.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +24,8 @@ public class DWSerialPortTest {
   @Test
   @DisplayName("It should always identify as a serial port")
   public void identifyAsANullPort() throws InvalidPortTypeDefinition {
-    Mockito.when(hardPorts.getPortByName(anyString())).thenReturn(SerialPort.getCommPorts()[0]);
+    DWISerial nullPort = new NullSerial();
+    Mockito.when(hardPorts.getPortByName(anyString())).thenReturn(nullPort);
     DWIPort port = new DWSerialPort(null, 0, hardPorts);
     port.setPortDef(portDef);
     assertEquals(1, port.identifyPort(), "should return serial port value (1)");
@@ -31,7 +34,8 @@ public class DWSerialPortTest {
   @Test
   @DisplayName("It should register with its manager on open")
   public void registerWithManagerOnOpen() throws InvalidPortTypeDefinition {
-    Mockito.when(hardPorts.getPortByName(anyString())).thenReturn(SerialPort.getCommPorts()[0]);
+    DWISerial nullPort = new NullSerial();
+    Mockito.when(hardPorts.getPortByName(anyString())).thenReturn(nullPort);
     DWIPort port = new DWSerialPort(portManager, 0, hardPorts);
     port.openWith(portDef);
     verify(portManager, times(1)).registerOpenPort(port);
