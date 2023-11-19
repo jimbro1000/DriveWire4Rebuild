@@ -1,6 +1,7 @@
 package org.thelair.dw4.drivewire.ports.serial;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.thelair.dw4.drivewire.ports.BasePortDef;
 import org.thelair.dw4.drivewire.ports.DWIPort;
 import org.thelair.dw4.drivewire.ports.DWIPortManager;

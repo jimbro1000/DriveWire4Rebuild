@@ -1,9 +1,9 @@
 package org.thelair.dw4.drivewire.util;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.thelair.dw4.drivewire.*;
 
 @Component
 public class AppUtils {

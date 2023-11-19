@@ -1,7 +1,7 @@
 package org.thelair.dw4.drivewire.ports;
 
-import org.apache.logging.log4j.*;
-import org.thelair.dw4.drivewire.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Null port definition type.
