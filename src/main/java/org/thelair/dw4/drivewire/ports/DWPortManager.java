@@ -11,8 +11,15 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * DriveWire port manager.
+ */
 public class DWPortManager implements DWIPortManager {
-  private static final Logger logger = LogManager.getLogger(DWPortManager.class);
+  /**
+   * Log appender.
+   */
+  private static final Logger LOGGER
+      = LogManager.getLogger(DWPortManager.class);
   /**
    * ports mapped by internal id.
    */
@@ -60,7 +67,7 @@ public class DWPortManager implements DWIPortManager {
   public void registerOpenPort(final DWIPort port) {
     // flag port as open
     openPorts.add(port);
-    logger.info("port opened " + port.identifyPort());
+    LOGGER.info("port opened " + port.identifyPort());
   }
 
   /**
@@ -71,7 +78,7 @@ public class DWPortManager implements DWIPortManager {
   public void registerClosedPort(final DWIPort port) {
     // flag port as closed
     openPorts.remove(port);
-    logger.info("port closed " + port.identifyPort());
+    LOGGER.info("port closed " + port.identifyPort());
   }
 
   /**
@@ -83,7 +90,7 @@ public class DWPortManager implements DWIPortManager {
   public DWIPort createPortInstance(
       final DWIPortType.DWPortTypeIdentity portType
   ) {
-    logger.info("creating port to spec " + portType.name());
+    LOGGER.info("creating port to spec " + portType.name());
     final DWIPort result = switch (portType) {
       case TCP_PORT -> new DWTcpPort();
       case SERIAL_PORT -> new DWSerialPort(
@@ -91,10 +98,10 @@ public class DWPortManager implements DWIPortManager {
       );
       default -> new DWNullPort(this, nextPort);
     };
-    logger.info("port built on id " + nextPort);
+    LOGGER.info("port built on id " + nextPort);
     portMap.put(nextPort, result);
     findNextPort();
-    logger.info("next available port id " + nextPort);
+    LOGGER.info("next available port id " + nextPort);
     return result;
   }
 
@@ -105,12 +112,12 @@ public class DWPortManager implements DWIPortManager {
   @Override
   public void disposePort(final DWIPort port) {
     final int portId = port.identifyPort();
-    logger.info("disposing of port " + portId);
+    LOGGER.info("disposing of port " + portId);
     if (openPorts.contains(port)) {
       port.closePort();
     }
     portMap.remove(port.identifyPort());
-    logger.info("disposed of port " + portId);
+    LOGGER.info("disposed of port " + portId);
     if (portId < nextPort) {
       nextPort = portId;
     }

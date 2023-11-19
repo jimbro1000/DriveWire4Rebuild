@@ -5,6 +5,9 @@ import com.fazecast.jSerialComm.SerialPortDataListener;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * Null serial stub.
+ */
 public class NullSerial implements DWISerial {
   /**
    * Adds a SerialPortDataListener to the serial port interface.

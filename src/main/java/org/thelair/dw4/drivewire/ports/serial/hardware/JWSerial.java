@@ -6,6 +6,9 @@ import com.fazecast.jSerialComm.SerialPortDataListener;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * JWSerialComm serial wrapper.
+ */
 public class JWSerial implements DWISerial {
   /**
    * Direct port implementation in JWSerialComm.

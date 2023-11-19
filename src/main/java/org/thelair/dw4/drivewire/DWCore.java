@@ -12,7 +12,10 @@ import org.thelair.dw4.drivewire.ports.serial.SerialPortDef;
  * Core application to DriveWire.
  */
 public class DWCore {
-  private static final Logger logger = LogManager.getLogger(DWCore.class);
+  /**
+   * Log appender.
+   */
+  private static final Logger LOGGER = LogManager.getLogger(DWCore.class);
 
   /**
    * Default serial baud rate of 2400.
@@ -37,16 +40,16 @@ public class DWCore {
    */
   public DWCore(final DWIPortManager manager) {
     this.portManager = manager;
-    logger.info("Initialised core");
+    LOGGER.info("Initialised core");
     testPorts();
   }
 
   private void testPorts() {
-    logger.info("creating serial port");
+    LOGGER.info("creating serial port");
     serial = portManager.createPortInstance(
         DWIPortType.DWPortTypeIdentity.SERIAL_PORT
     );
-    logger.info("serial port " + serial.toString());
+    LOGGER.info("serial port " + serial.toString());
     try {
       serial.openWith(
           new SerialPortDef(DEFAULT_BAUD_RATE,
@@ -56,9 +59,9 @@ public class DWCore {
               "com1",
               1)
       );
-      logger.info("port opened " + serial.getPortDefinition());
+      LOGGER.info("port opened " + serial.getPortDefinition());
     } catch (InvalidPortTypeDefinition ex) {
-      logger.error("failed to open port " + ex.getMessage());
+      LOGGER.error("failed to open port " + ex.getMessage());
       System.out.println(ex.getMessage());
     }
   }

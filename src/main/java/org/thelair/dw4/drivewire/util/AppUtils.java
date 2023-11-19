@@ -5,9 +5,15 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/**
+ * Utility class for top level application.
+ */
 @Component
 public class AppUtils {
-  private static final Logger logger = LogManager.getLogger(AppUtils.class);
+  /**
+   * Log appender.
+   */
+  private static final Logger LOGGER = LogManager.getLogger(AppUtils.class);
 
   /**
    * Auto open flag.
@@ -40,7 +46,7 @@ public class AppUtils {
    * @return true if autoopen is defined
    */
   public boolean isAutoOpen() {
-    logger.info("Auto open is " + autoopen);
+    LOGGER.info("Auto open is " + autoopen);
     return autoopen == 1;
   }
 
@@ -56,7 +62,7 @@ public class AppUtils {
       case LINUX -> autoLinuxPrefix;
       default -> autoNullPrefix;
     };
-    logger.info("port name prefix " + name);
+    LOGGER.info("port name prefix " + name);
     return name;
   }
 }

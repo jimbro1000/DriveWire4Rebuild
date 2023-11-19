@@ -7,7 +7,10 @@ import org.apache.logging.log4j.Logger;
  * Null port definition type.
  */
 public final class DWNullPort implements DWIPort {
-  private static final Logger logger = LogManager.getLogger(DWNullPort.class);
+  /**
+   * Log appender.
+   */
+  private static final Logger LOGGER = LogManager.getLogger(DWNullPort.class);
   /**
    * Port manager.
    */
@@ -22,7 +25,7 @@ public final class DWNullPort implements DWIPort {
    * @param managerId port id reference from manager
    */
   public DWNullPort(final DWIPortManager manager, final int managerId) {
-    logger.info("created new null port " + managerId);
+    LOGGER.info("created new null port " + managerId);
     this.portManager = manager;
     this.portId = managerId;
   }

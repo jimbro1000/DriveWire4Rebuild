@@ -5,6 +5,9 @@ import com.fazecast.jSerialComm.SerialPortDataListener;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * Interface definition for serial hardware classes.
+ */
 public interface DWISerial {
   /**
    * Adds a SerialPortDataListener to the serial port interface.

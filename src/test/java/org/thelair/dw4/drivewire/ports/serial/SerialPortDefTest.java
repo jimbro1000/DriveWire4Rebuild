@@ -1,13 +1,21 @@
 package org.thelair.dw4.drivewire.ports.serial;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Describes Serial Port Definition.
+ */
 public class SerialPortDefTest {
+  /**
+   * Ports must provide port details as a Map.
+   */
   @Test
+  @DisplayName("It should compile the port definition as a map")
   public void itShouldReportTheDefContentsAsAMap() {
     SerialPortDef subject = new SerialPortDef(1,2,3,4,"a",5);
     Map<String, Integer> actual = subject.getPortDetail();
