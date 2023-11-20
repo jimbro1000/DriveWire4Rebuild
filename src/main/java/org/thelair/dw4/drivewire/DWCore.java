@@ -2,6 +2,9 @@ package org.thelair.dw4.drivewire;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 import org.thelair.dw4.drivewire.ports.DWIPort;
 import org.thelair.dw4.drivewire.ports.DWIPortManager;
 import org.thelair.dw4.drivewire.ports.DWIPortType;
@@ -11,7 +14,8 @@ import org.thelair.dw4.drivewire.ports.serial.SerialPortDef;
 /**
  * Core application to DriveWire.
  */
-public class DWCore {
+@Component
+public class DWCore implements ApplicationListener<ApplicationReadyEvent> {
   /**
    * Log appender.
    */
@@ -29,10 +33,6 @@ public class DWCore {
    * port manager.
    */
   private final DWIPortManager portManager;
-  /**
-   * default serial port - may be disabled in configuration.
-   */
-  private DWIPort serial;
 
   /**
    * Create core service.
@@ -41,12 +41,21 @@ public class DWCore {
   public DWCore(final DWIPortManager manager) {
     this.portManager = manager;
     LOGGER.info("Initialised core");
+  }
+
+  /**
+   * Handle application ready event.
+   *
+   * @param event ready event
+   */
+  @Override
+  public void onApplicationEvent(final ApplicationReadyEvent event) {
     testPorts();
   }
 
   private void testPorts() {
-    LOGGER.info("creating serial port");
-    serial = portManager.createPortInstance(
+    LOGGER.info("creating port");
+    final DWIPort serial = portManager.createPortInstance(
         DWIPortType.DWPortTypeIdentity.SERIAL_PORT
     );
     LOGGER.info("serial port " + serial.toString());

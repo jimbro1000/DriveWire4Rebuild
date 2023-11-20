@@ -109,8 +109,8 @@ public final class DWSerialPort implements DWIPort {
    * @return port details
    */
   public String getPortDefinition() {
-    StringBuilder stringDef = new StringBuilder();
-    Map<String, Integer> def = portDef.getPortDetail();
+    final StringBuilder stringDef = new StringBuilder();
+    final Map<String, Integer> def = portDef.getPortDetail();
     for (final String key:def.keySet()) {
       stringDef.append(key).append(" : ").append(def.get(key)).append(" | ");
     }

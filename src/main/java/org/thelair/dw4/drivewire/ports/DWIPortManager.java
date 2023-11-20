@@ -1,5 +1,7 @@
 package org.thelair.dw4.drivewire.ports;
 
+import jakarta.servlet.ServletContextEvent;
+
 /**
  * Port handler interface.
  */
@@ -45,4 +47,13 @@ public interface DWIPortManager {
    * @param port generic closed port
    */
   void disposePort(DWIPort port);
+
+
+  /**
+   * Handles context shutdown event.
+   * Close all open ports. Dispose of all ports
+   *
+   * @param event context event
+   */
+  void contextDestroyed(ServletContextEvent event);
 }

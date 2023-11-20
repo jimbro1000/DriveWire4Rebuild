@@ -56,7 +56,7 @@ public class AppUtils {
    * @return assumed prefix to port name
    */
   public String portNamePrefix() {
-    String name =  switch (OsUtils.getOsName()) {
+    final String name = switch (OsUtils.getOsName()) {
       case WINDOWS -> autoWinPrefix;
       case MAC -> autoMacPrefix;
       case LINUX -> autoLinuxPrefix;

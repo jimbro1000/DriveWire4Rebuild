@@ -1,7 +1,10 @@
 package org.thelair.dw4.drivewire.ports;
 
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 import org.thelair.dw4.drivewire.ports.serial.DWSerialPort;
 import org.thelair.dw4.drivewire.ports.serial.SerialPortHardware;
 import org.thelair.dw4.drivewire.ports.tcp.DWTcpPort;
@@ -14,7 +17,8 @@ import java.util.Set;
 /**
  * DriveWire port manager.
  */
-public class DWPortManager implements DWIPortManager {
+@Component
+public class DWPortManager implements DWIPortManager, ServletContextListener {
   /**
    * Log appender.
    */
@@ -32,6 +36,25 @@ public class DWPortManager implements DWIPortManager {
    * next valid port id.
    */
   private int nextPort = 1;
+
+  /**
+   * Handles context shutdown event.
+   * Close all open ports. Dispose of all ports
+   *
+   * @param event context event
+   */
+  @Override
+  public void contextDestroyed(final ServletContextEvent event) {
+    final Set<Integer> portKeys =  portMap.keySet();
+    for (final Integer key : portKeys) {
+      final DWIPort port = portMap.get(key);
+      if (openPorts.contains(port)) {
+        port.closePort();
+      }
+      portMap.remove(key);
+    }
+  }
+
   /**
    * Count of all defined ports.
    * @return number of ports (open and closed)

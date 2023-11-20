@@ -133,4 +133,38 @@ public class DWPortManagerTest {
       fail("should not throw exception on open");
     }
   }
+
+  /**
+   * Port Manager should respond to a context shutdown by closing
+   * all open ports
+   */
+  @Test
+  public void closePortsOnShutdown() {
+    DWIPort port =
+        portManager.createPortInstance(DWIPortType.DWPortTypeIdentity.NULL_PORT);
+    try {
+      port.openWith(null);
+      portManager.contextDestroyed(null);
+      assertEquals(0, portManager.getOpenPortCount(), "All ports should be closed on shutdown");
+    } catch (InvalidPortTypeDefinition ex) {
+      fail("Should not throw invalid port definition");
+    }
+  }
+
+  /**
+   * Port Manager should respond to a context shutdown by disposing
+   * of all ports
+   */
+  @Test
+  public void disposePortsOnShutdown() {
+    DWIPort port =
+        portManager.createPortInstance(DWIPortType.DWPortTypeIdentity.NULL_PORT);
+    try {
+      port.openWith(null);
+      portManager.contextDestroyed(null);
+      assertEquals(0, portManager.getPortCount(), "All ports should be disposed on shutdown");
+    } catch (InvalidPortTypeDefinition ex) {
+      fail("Should not throw invalid port definition");
+    }
+  }
 }

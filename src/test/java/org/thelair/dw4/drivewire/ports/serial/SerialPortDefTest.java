@@ -2,6 +2,7 @@ package org.thelair.dw4.drivewire.ports.serial;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.thelair.dw4.drivewire.ports.*;
 
 import java.util.Map;
 
@@ -31,5 +32,17 @@ public class SerialPortDefTest {
         "value");
     assertEquals(1, actual.get("Identity"), "It must identify as a serial " +
         "port");
+  }
+
+  /**
+   * Port definitions must correctly identify.
+   */
+  @Test
+  @DisplayName("It should identify as a serial port")
+  public void itShouldIdentifyAsASerialPort() {
+    BasePortDef subject = new SerialPortDef(1,2,3,4,"a",5);
+    assertEquals(DWIPortType.DWPortTypeIdentity.SERIAL_PORT,
+        subject.identify(),
+        "it should identify as a serial port");
   }
 }
