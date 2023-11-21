@@ -45,13 +45,12 @@ public class DWPortManager implements DWIPortManager, ServletContextListener {
    */
   @Override
   public void contextDestroyed(final ServletContextEvent event) {
-    final Set<Integer> portKeys =  portMap.keySet();
-    for (final Integer key : portKeys) {
-      final DWIPort port = portMap.get(key);
+    for (final Map.Entry<Integer, DWIPort> entry : portMap.entrySet()) {
+      final DWIPort port = entry.getValue();
       if (openPorts.contains(port)) {
         port.closePort();
       }
-      portMap.remove(key);
+      portMap.remove(entry.getKey());
     }
   }
 
