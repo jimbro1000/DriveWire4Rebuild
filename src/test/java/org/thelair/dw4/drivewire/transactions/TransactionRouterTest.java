@@ -15,6 +15,7 @@ public class TransactionRouterTest {
   public void getDictionary() {
     TransactionRouter subject = new TransactionRouter();
     Map<Integer, Transaction> actual = subject.getDictionary();
+    assertFalse(actual == null, "dictionary object must be instantiated");
     assertFalse(actual.isEmpty(), "dictionary should be non-zero in length");
   }
 }
