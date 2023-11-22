@@ -6,6 +6,9 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+/**
+ * Describes transaction router.
+ */
 public class TransactionRouterTest {
   /**
    * This test is nugatory in terms of behaviours and is present only to trigger

@@ -2,6 +2,9 @@ package org.thelair.dw4.drivewire.transactions;
 
 import lombok.Getter;
 
+/**
+ * Transaction Op Codes.
+ */
 @Getter
 public enum Transaction {
   /**
