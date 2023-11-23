@@ -10,6 +10,9 @@ import org.thelair.dw4.drivewire.ports.DWIPortManager;
 import org.thelair.dw4.drivewire.ports.DWIPortType;
 import org.thelair.dw4.drivewire.ports.InvalidPortTypeDefinition;
 import org.thelair.dw4.drivewire.ports.serial.SerialPortDef;
+import org.thelair.dw4.drivewire.transactions.Transaction;
+import org.thelair.dw4.drivewire.transactions.TransactionRouter;
+import org.thelair.dw4.drivewire.transactions.operations.DwReset;
 
 /**
  * Core application to DriveWire.
@@ -33,14 +36,25 @@ public class DWCore implements ApplicationListener<ApplicationReadyEvent> {
    * port manager.
    */
   private final DWIPortManager portManager;
+  /**
+   * transaction router.
+   */
+  private final TransactionRouter router;
 
   /**
    * Create core service.
    * @param manager port manager
    */
   public DWCore(final DWIPortManager manager) {
+    this.router = new TransactionRouter();
     this.portManager = manager;
     LOGGER.info("Initialised core");
+  }
+
+  private void populateRouter() {
+    router.registerOperation(Transaction.OP_RESET1, new DwReset());
+    router.registerOperation(Transaction.OP_RESET2, new DwReset());
+    router.registerOperation(Transaction.OP_RESET3, new DwReset());
   }
 
   /**
