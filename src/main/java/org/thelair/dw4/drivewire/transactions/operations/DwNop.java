@@ -1,9 +1,9 @@
 package org.thelair.dw4.drivewire.transactions.operations;
 
 /**
- * Perform reset of statistics and flush drive caches.
+ * No operation (NOP).
  */
-public class DwReset extends BaseOp implements Operation {
+public class DwNop extends BaseOp implements Operation {
   /**
    * Process operation.
    *
@@ -11,7 +11,6 @@ public class DwReset extends BaseOp implements Operation {
    */
   @Override
   public void process(final int[] data) {
-    int code = data[0];
-
+    // no operation
   }
 }

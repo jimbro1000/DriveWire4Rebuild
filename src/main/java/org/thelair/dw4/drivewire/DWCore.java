@@ -12,7 +12,10 @@ import org.thelair.dw4.drivewire.ports.InvalidPortTypeDefinition;
 import org.thelair.dw4.drivewire.ports.serial.SerialPortDef;
 import org.thelair.dw4.drivewire.transactions.Transaction;
 import org.thelair.dw4.drivewire.transactions.TransactionRouter;
+import org.thelair.dw4.drivewire.transactions.operations.DwInit;
+import org.thelair.dw4.drivewire.transactions.operations.DwNop;
 import org.thelair.dw4.drivewire.transactions.operations.DwReset;
+import org.thelair.dw4.drivewire.transactions.operations.DwTime;
 
 /**
  * Core application to DriveWire.
@@ -55,6 +58,9 @@ public class DWCore implements ApplicationListener<ApplicationReadyEvent> {
     router.registerOperation(Transaction.OP_RESET1, new DwReset());
     router.registerOperation(Transaction.OP_RESET2, new DwReset());
     router.registerOperation(Transaction.OP_RESET3, new DwReset());
+    router.registerOperation(Transaction.OP_DWINIT, new DwInit());
+    router.registerOperation(Transaction.OP_TIME, new DwTime());
+    router.registerOperation(Transaction.OP_NOP, new DwNop());
   }
 
   /**
