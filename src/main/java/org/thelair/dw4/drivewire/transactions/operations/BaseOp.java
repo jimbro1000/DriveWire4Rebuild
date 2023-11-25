@@ -1,5 +1,6 @@
 package org.thelair.dw4.drivewire.transactions.operations;
 
+import lombok.Getter;
 import org.thelair.dw4.drivewire.DWCore;
 
 /**
@@ -9,6 +10,7 @@ public abstract class BaseOp {
   /**
    * Controller host.
    */
+  @Getter
   private DWCore controller = null;
 
   /**

@@ -11,6 +11,6 @@ public class DwTerm extends BaseOp implements Operation {
    */
   @Override
   public void process(final int[] data) {
-
+    getController().setClientVersion(0);
   }
 }

@@ -1,5 +1,7 @@
 package org.thelair.dw4.drivewire;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -26,7 +28,10 @@ public class DWCore implements ApplicationListener<ApplicationReadyEvent> {
    * Log appender.
    */
   private static final Logger LOGGER = LogManager.getLogger(DWCore.class);
-
+  /**
+   * Enabled features.
+   */
+  private static final int DW4_FEATURES = 0x00;
   /**
    * Default serial baud rate of 2400.
    */
@@ -43,6 +48,12 @@ public class DWCore implements ApplicationListener<ApplicationReadyEvent> {
    * transaction router.
    */
   private final TransactionRouter router;
+  /**
+   * client version.
+   */
+  @Getter
+  @Setter
+  private int clientVersion;
 
   /**
    * Create core service.
@@ -51,6 +62,7 @@ public class DWCore implements ApplicationListener<ApplicationReadyEvent> {
   public DWCore(final DWIPortManager manager) {
     this.router = new TransactionRouter();
     this.portManager = manager;
+    this.clientVersion = -1;
     LOGGER.info("Initialised core");
   }
 
@@ -58,6 +70,7 @@ public class DWCore implements ApplicationListener<ApplicationReadyEvent> {
     router.registerOperation(Transaction.OP_RESET1, new DwReset());
     router.registerOperation(Transaction.OP_RESET2, new DwReset());
     router.registerOperation(Transaction.OP_RESET3, new DwReset());
+    router.registerOperation(Transaction.OP_INIT, new DwInit());
     router.registerOperation(Transaction.OP_DWINIT, new DwInit());
     router.registerOperation(Transaction.OP_TIME, new DwTime());
     router.registerOperation(Transaction.OP_NOP, new DwNop());
@@ -70,7 +83,17 @@ public class DWCore implements ApplicationListener<ApplicationReadyEvent> {
    */
   @Override
   public void onApplicationEvent(final ApplicationReadyEvent event) {
+    populateRouter();
     testPorts();
+  }
+
+  /**
+   * Report server capability.
+   * @return register of enabled features
+   */
+  public int reportCapability() {
+    LOGGER.info("Reported server features: " + DW4_FEATURES);
+    return DW4_FEATURES;
   }
 
   private void testPorts() {

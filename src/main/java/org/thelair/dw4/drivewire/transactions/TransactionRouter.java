@@ -51,7 +51,7 @@ public class TransactionRouter {
   }
 
   private void buildDictionary() {
-    for (Transaction entry : Transaction.values()) {
+    for (final Transaction entry : Transaction.values()) {
       dictionary.put(entry.getOpCode(), entry);
     }
   }
@@ -66,7 +66,7 @@ public class TransactionRouter {
       sendResponse(RCResponse.RC_SYNTAX_ERROR, new int[] {});
       return false;
     }
-    Transaction transaction = dictionary.get(code);
+    final Transaction transaction = dictionary.get(code);
     if (length > transaction.getOpMaxLength()
         || length < transaction.getOpLength()) {
       sendResponse(RCResponse.RC_SYNTAX_ERROR, new int[] {});
@@ -84,8 +84,8 @@ public class TransactionRouter {
       sendResponse(RCResponse.RC_SYNTAX_ERROR, new int[] {});
       return;
     }
-    Transaction transaction = dictionary.get(data[0]);
-    Operation function = routing.get(transaction);
+    final Transaction transaction = dictionary.get(data[0]);
+    final Operation function = routing.get(transaction);
     function.process(data);
   }
 
@@ -96,7 +96,7 @@ public class TransactionRouter {
    */
   @Async
   @EventListener
-  void processResponse(final DWMessageEvent event) {
+  public void processResponse(final DWMessageEvent event) {
     sendResponse(RCResponse.RC_SUCCESS, event.getMessage());
   }
 }

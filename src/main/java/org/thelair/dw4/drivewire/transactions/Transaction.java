@@ -60,6 +60,10 @@ public enum Transaction {
    */
   OP_SERREADM("OP_SERREADM", 0x63, 2, 2),
   /**
+   * DRIVEWIRE 4 INIT - $5A.
+   */
+  OP_DWINIT("OP_DWINIT", 0x5A, 1, 1),
+  /**
    * WRITE - $57.
    */
   OP_WRITE("OP_WRITE", 0x57, 262, 262),
@@ -80,9 +84,9 @@ public enum Transaction {
    */
   OP_PRINT("OP_PRINT", 0x50, 1, 1),
   /**
-   * DRIVEWIRE INIT - $49.
+   * DRIVEWIRE 3 INIT - $49.
    */
-  OP_DWINIT("OP_DWINIT", 0x49, 0, 0),
+  OP_INIT("OP_INIT", 0x49, 0, 0),
   /**
    * GET STAT - $47.
    */

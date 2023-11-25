@@ -11,7 +11,7 @@ public class DwReset extends BaseOp implements Operation {
    */
   @Override
   public void process(final int[] data) {
-    int code = data[0];
+    final int code = data[0];
 
   }
 }
