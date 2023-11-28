@@ -13,7 +13,7 @@ public interface StatsCollector {
    * Get collector id.
    * @return uuid
    */
-  UUID getId();
+  UUID getCollectorId();
   /**
    * Increment a counter.
    * @param key counter name
@@ -43,4 +43,16 @@ public interface StatsCollector {
    * @return map of counters
    */
   Map<String, Long> getStats();
+
+  /**
+   * Get a single named statistic.
+   * @param key counter name
+   * @return long count
+   */
+  Long getStat(String key);
+
+  /**
+   * Remove collector from active.
+   */
+  void closeCollector();
 }

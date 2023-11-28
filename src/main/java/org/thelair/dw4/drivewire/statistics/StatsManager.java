@@ -1,6 +1,8 @@
 package org.thelair.dw4.drivewire.statistics;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -28,28 +30,48 @@ public final class StatsManager {
    * @return stat collector
    */
   public static StatsCollector getCollector(final Class<?> clazz) {
-    final UUID id = UUID.randomUUID();
-    StatsCollector collector = new SimpleCollector(id, clazz);
-    REGISTER.put(id, collector);
+    final UUID collectorId = UUID.randomUUID();
+    final StatsCollector collector = new SimpleCollector(collectorId, clazz);
+    REGISTER.put(collectorId, collector);
     return collector;
   }
 
   /**
    * Close an existing collector.
+   * Moves collector to the graveyard until the next
+   * reset event
    *
    * @param collector stat collector
    */
   public static void closeCollector(final StatsCollector collector) {
-    final UUID id = collector.getId();
-    REGISTER.remove(id);
-    GRAVEYARD.put(id, collector);
+    final UUID collectorId = collector.getCollectorId();
+    collector.closeCollector();
+    REGISTER.remove(collectorId);
+    GRAVEYARD.put(collectorId, collector);
   }
 
   /**
    * Reset all current collectors.
    */
   public static void resetSession() {
-    REGISTER.clear();
+    resetCollectors();
     GRAVEYARD.clear();
+  }
+
+  private static void resetCollectors() {
+    for (final StatsCollector collector: REGISTER.values()) {
+      collector.reset();
+    }
+  }
+
+  /**
+   * Get all collectors in the current session.
+   * @return combined copy of current and graveyard collectors
+   */
+  public static List<StatsCollector> getSessionCollectors() {
+    final List<StatsCollector> result = new ArrayList<>();
+    result.addAll(REGISTER.values());
+    result.addAll(GRAVEYARD.values());
+    return result;
   }
 }

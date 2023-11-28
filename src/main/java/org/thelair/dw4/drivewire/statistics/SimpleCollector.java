@@ -1,5 +1,7 @@
 package org.thelair.dw4.drivewire.statistics;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,16 +20,28 @@ public class SimpleCollector implements StatsCollector {
    * Unique collector id.
    */
   private final UUID collectorId;
+  /**
+   * Represented class name.
+   */
+  @Getter
+  private final String className;
+  /**
+   * Closed status.
+   */
+  @Getter
+  private boolean closed;
 
   /**
    * Simple stat collector.
    *
-   * @param id unique id
+   * @param uuid unique id
    * @param clazz collecting class
    */
-  public SimpleCollector(final UUID id, final Class<?> clazz) {
+  public SimpleCollector(final UUID uuid, final Class<?> clazz) {
     stats = new HashMap<>();
-    collectorId = id;
+    collectorId = uuid;
+    className = clazz.getName();
+    closed = false;
   }
   /**
    * Get collector id.
@@ -35,7 +49,7 @@ public class SimpleCollector implements StatsCollector {
    * @return uuid
    */
   @Override
-  public UUID getId() {
+  public UUID getCollectorId() {
     return collectorId;
   }
 
@@ -46,8 +60,10 @@ public class SimpleCollector implements StatsCollector {
    */
   @Override
   public void addCounter(final String key) {
-    if (!stats.containsKey(key)) {
-      stats.put(key, 0L);
+    if (stats.containsKey(key)) {
+      incrementCounter(key, 1);
+    } else {
+      stats.put(key, 1L);
     }
   }
 
@@ -59,9 +75,16 @@ public class SimpleCollector implements StatsCollector {
    */
   @Override
   public void addCounter(final String key, final long count) {
-    if (!stats.containsKey(key)) {
+    if (stats.containsKey(key)) {
+      incrementCounter(key, count);
+    } else {
       stats.put(key, count);
     }
+  }
+
+  private void incrementCounter(final String key, final long count) {
+    final Long counter = stats.get(key) + count;
+    stats.replace(key, counter);
   }
 
   /**
@@ -76,7 +99,7 @@ public class SimpleCollector implements StatsCollector {
   }
 
   /**
-   * Get list of counter key names.
+   * Get list of recognised counter key names.
    *
    * @return list of keys
    */
@@ -87,11 +110,40 @@ public class SimpleCollector implements StatsCollector {
 
   /**
    * Get all statistics.
+   * Returns a copy of the statistics map
    *
    * @return map of counters
    */
   @Override
   public Map<String, Long> getStats() {
-    return null;
+    return copyStats();
+  }
+
+  private Map<String, Long> copyStats() {
+    return new HashMap<>(stats);
+  }
+
+  /**
+   * Get a single named statistic.
+   * Returns stored counter value if key name is recognised,
+   * Returns -1 if key is not recognised
+   *
+   * @param key counter name
+   * @return long count
+   */
+  @Override
+  public Long getStat(final String key) {
+    if (stats.containsKey(key)) {
+      return stats.get(key);
+    }
+    return -1L;
+  }
+
+  /**
+   * Remove collector from active.
+   */
+  @Override
+  public void closeCollector() {
+    closed = true;
   }
 }
