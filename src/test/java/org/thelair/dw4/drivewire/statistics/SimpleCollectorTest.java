@@ -120,6 +120,9 @@ public class SimpleCollectorTest {
     assertEquals(100, stats.get("testB"), "count should be 100");
   }
 
+  /**
+   * Collector maintains a closed flag.
+   */
   @Test
   public void itFlagsTheCollectorAsClosed() {
     final SimpleCollector subject = new SimpleCollector(UUID.randomUUID(), SimpleCollectorTest.class);
